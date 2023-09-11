@@ -1,0 +1,43 @@
+﻿@page "/"
+
+<RadzenDataGrid Data="@customers" AllowFiltering="true" FilterMode="FilterMode.Simple" TItem="Customer" ColumnWidth="200px">
+    <Columns>
+        <RadzenDataGridColumn TItem="Customer" Property="Registered" Title="Registered" Width="80px" Resizable="true"/>
+        <RadzenDataGridColumn TItem="Customer" Property="Name" Title="Name" Width="160px" Resizable="true"/>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    private IQueryable<Customer> customers;
+
+    protected override void OnParametersSet()
+    {
+        var data = new List<Customer>()
+        {
+            new()
+            {
+                Name = "Test #1",
+                Registered = DateTime.Now.AddDays(-3)
+            },
+            new()
+            {
+                Name = "Test #2",
+                Registered = DateTime.Now.AddDays(-2)
+            },
+            new()
+            {
+                Name = "Test #3",
+                Registered = DateTime.Now.AddDays(-1)
+            }
+        };
+
+        customers = data.AsQueryable();
+    }
+    
+    public class Customer
+    {
+        public DateTime Registered { get; set; }
+        public string Name { get; set; }
+    }
+}
